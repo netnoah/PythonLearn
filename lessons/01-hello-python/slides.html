@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 1 课 · 你好，Python！</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow: hidden;
+  }
+
+  .deck {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4vh 8vw;
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity .35s ease, transform .35s ease;
+    pointer-events: none;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .slide h1 {
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    margin-bottom: 3vh;
+    text-shadow: 0 3px 12px rgba(0,0,0,.25);
+  }
+  .slide h2 {
+    font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+    margin-bottom: 2vh;
+    opacity: .95;
+  }
+  .slide p, .slide li {
+    font-size: clamp(1.1rem, 2.6vw, 1.9rem);
+    line-height: 1.7;
+    margin: 1vh 0;
+  }
+  .slide ul { list-style: none; text-align: left; }
+  .slide li::before { content: "▶ "; color: #ffd166; }
+
+  .subtitle { font-size: clamp(1rem, 2.2vw, 1.5rem); opacity: .85; margin-top: 2vh; }
+
+  .badge {
+    display: inline-block;
+    background: #ffd166;
+    color: #5b3a8a;
+    font-weight: bold;
+    padding: .4em 1em;
+    border-radius: 2em;
+    font-size: clamp(.9rem, 2vw, 1.3rem);
+    margin-bottom: 2vh;
+  }
+
+  pre {
+    background: #2d2a3e;
+    color: #ffd166;
+    text-align: left;
+    padding: 2.5vh 2.5vw;
+    border-radius: 14px;
+    font-size: clamp(1rem, 2.6vw, 1.8rem);
+    line-height: 1.6;
+    font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    margin: 2vh 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  pre .cmt { color: #8be9a0; }
+  pre .out { color: #7dd3fc; }
+
+  .emoji-big { font-size: clamp(4rem, 12vw, 8rem); margin-bottom: 2vh; }
+
+  /* 底部控制条 */
+  .controls {
+    position: fixed;
+    bottom: 2vh;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1.2vw;
+    z-index: 10;
+  }
+  .controls button {
+    background: rgba(255,255,255,.2);
+    border: 2px solid rgba(255,255,255,.6);
+    color: #fff;
+    font-size: 1.4rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .controls button:hover { background: rgba(255,255,255,.4); }
+  .counter {
+    color: #fff;
+    font-size: 1.1rem;
+    min-width: 6rem;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide">
+    <div class="emoji-big">🐍</div>
+    <div class="badge">Python 编程 · 第一单元</div>
+    <h1>你好，Python！</h1>
+    <p class="subtitle">今天，我们要让电脑开口说话~</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <h1>什么是编程？</h1>
+    <ul>
+      <li>编程 = 给电脑下指令</li>
+      <li>就像给机器人写一本「说明书」</li>
+      <li>你写什么，电脑就做什么</li>
+      <li>Python 就是写说明书用的"语言"</li>
+    </ul>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <h1>print() 打印</h1>
+    <p>让电脑把文字显示到屏幕上</p>
+    <p>文字要放在双引号 <b>" "</b> 里</p>
+    <pre><span class="cmt"># 把"你好"打印出来</span>
+print(<span class="out">"你好！"</span>)</pre>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <h1>想说什么就写什么</h1>
+    <p>中文、英文、数字，都可以放进双引号里</p>
+    <pre>print(<span class="out">"我喜欢打游戏"</span>)
+print(<span class="out">"I love Python"</span>)
+print(<span class="out">"我的学号是 6"</span>)</pre>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <h1>换行 \n</h1>
+    <p>在文字里写 <b>\n</b>，表示"从这里换一行"</p>
+    <pre>print(<span class="out">"第一行\n第二行\n第三行"</span>)
+
+<span class="out">第一行
+第二行
+第三行</span></pre>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <h1>一次打印多个</h1>
+    <p>用逗号 <b>,</b> 把要打印的东西连起来</p>
+    <p>还能打印表情符号 🎮 ✨ 🦆</p>
+    <pre>print(<span class="out">"我"</span>, <span class="out">"会"</span>, <span class="out">"说话"</span>)
+
+<span class="out">我 会 说话</span></pre>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <h1># 是注释</h1>
+    <p>注释是写给自己看的"便签"，电脑会忽略它</p>
+    <pre><span class="cmt"># 我是笔记，不会被打印</span>
+print(<span class="out">"这一句才会被打印"</span>)</pre>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="emoji-big">💻</div>
+    <h1>动手时间！</h1>
+    <p>打开 <b>demo.py</b>，在命令行输入：</p>
+    <pre>python demo.py</pre>
+    <p>看看电脑会跟你说什么？</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="emoji-big">🎉</div>
+    <h1>小彩蛋</h1>
+    <p>程序还会停下来问你的名字</p>
+    <p>然后叫出你的名字！</p>
+    <p class="subtitle">这个 input() 下一课再详细学，今天先玩一玩~</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="emoji-big">⭐</div>
+    <h1>今天学会了</h1>
+    <ul>
+      <li><b>print()</b> 让电脑说话</li>
+      <li>文字要放在双引号里</li>
+      <li><b>\n</b> 换行，<b>#</b> 是注释</li>
+      <li>电脑能叫出你的名字</li>
+    </ul>
+    <p class="subtitle">挑战：给自己做一张电子名片！</p>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button id="prev" title="上一页">‹</button>
+  <span class="counter" id="counter">1 / 10</span>
+  <button id="next" title="下一页">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  const counter = document.getElementById('counter');
+
+  function show(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.getElementById('prev').addEventListener('click', () => show(current - 1));
+  document.getElementById('next').addEventListener('click', () => show(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+  });
+
+  // 点击屏幕右半部分下一页、左半部分上一页
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.target.closest('button')) return;
+    show(e.clientX > window.innerWidth / 2 ? current + 1 : current - 1);
+  });
+
+  show(0);
+</script>
+</body>
+</html>

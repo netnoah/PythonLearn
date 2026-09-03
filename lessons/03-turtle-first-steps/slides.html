@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 3 课 · 小海龟登场</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    overflow: hidden;
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 4vh 8vw; text-align: center; color: #fff;
+    opacity: 0; transform: translateX(40px);
+    transition: opacity .35s ease, transform .35s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+
+  .slide h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); margin-bottom: 3vh; text-shadow: 0 3px 12px rgba(0,0,0,.25); }
+  .slide h2 { font-size: clamp(1.4rem, 3.5vw, 2.4rem); margin-bottom: 2vh; opacity: .95; }
+  .slide p, .slide li { font-size: clamp(1.1rem, 2.6vw, 1.9rem); line-height: 1.7; margin: 1vh 0; }
+  .slide ul { list-style: none; text-align: left; }
+  .slide li::before { content: "▶ "; color: #ffd166; }
+
+  .subtitle { font-size: clamp(1rem, 2.2vw, 1.5rem); opacity: .9; margin-top: 2vh; }
+
+  .badge {
+    display: inline-block; background: #ffd166; color: #0b5f4a;
+    font-weight: bold; padding: .4em 1em; border-radius: 2em;
+    font-size: clamp(.9rem, 2vw, 1.3rem); margin-bottom: 2vh;
+  }
+
+  pre {
+    background: #1e2b2b; color: #ffd166; text-align: left;
+    padding: 2.5vh 2.5vw; border-radius: 14px;
+    font-size: clamp(1rem, 2.6vw, 1.8rem); line-height: 1.6;
+    font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3); margin: 2vh 0;
+    white-space: pre-wrap; word-break: break-all;
+  }
+  pre .cmt { color: #8be9a0; }
+  pre .out { color: #7dd3fc; }
+
+  .emoji-big { font-size: clamp(4rem, 12vw, 8rem); margin-bottom: 2vh; }
+
+  .controls {
+    position: fixed; bottom: 2vh; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 1.2vw; z-index: 10;
+  }
+  .controls button {
+    background: rgba(255,255,255,.2); border: 2px solid rgba(255,255,255,.6);
+    color: #fff; font-size: 1.4rem; width: 3rem; height: 3rem;
+    border-radius: 50%; cursor: pointer; transition: background .2s;
+  }
+  .controls button:hover { background: rgba(255,255,255,.4); }
+  .counter { color: #fff; font-size: 1.1rem; min-width: 6rem; text-align: center; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide">
+    <div class="emoji-big">🐢</div>
+    <div class="badge">Python 编程 · 第二单元</div>
+    <h1>小海龟登场</h1>
+    <p class="subtitle">让一只海龟在屏幕上爬，爬过的路就变成画！</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <h1>什么是 turtle？</h1>
+    <ul>
+      <li>turtle = 海龟</li>
+      <li>屏幕上有只小海龟，听你的指挥</li>
+      <li>它爬过的地方，会留下一条线</li>
+      <li>你让它怎么爬，就画出什么图形</li>
+    </ul>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <h1>先把海龟请出来</h1>
+    <pre><span class="cmt"># 拿来"海龟"工具箱</span>
+import turtle
+
+<span class="cmt"># 造一只海龟，起名叫 t</span>
+t = turtle.Turtle()</pre>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <h1>海龟会听 4 个命令</h1>
+    <pre>t.forward(<span class="out">100</span>)   <span class="cmt"># 向前走 100 步</span>
+t.backward(<span class="out">100</span>)  <span class="cmt"># 向后走 100 步</span>
+t.left(<span class="out">90</span>)       <span class="cmt"># 向左转 90 度</span>
+t.right(<span class="out">90</span>)      <span class="cmt"># 向右转 90 度</span></pre>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <h1>forward：前进</h1>
+    <p>告诉海龟向前走几步</p>
+    <pre>t.forward(<span class="out">100</span>)</pre>
+    <p>数字越大，走得越远，线就越长</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <h1>left / right：转弯</h1>
+    <p>数字就是转弯的角度（度数）</p>
+    <pre>t.right(<span class="out">90</span>)   <span class="cmt"># 向右转一个"直角"</span></pre>
+    <p>海龟转一圈是 360 度，转 90 度就是转四分之一圈</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <h1>画正方形</h1>
+    <p>正方形有 4 条边、4 个角</p>
+    <p>每个角转 <b>360 ÷ 4 = 90</b> 度</p>
+    <pre>t.forward(<span class="out">100</span>); t.right(<span class="out">90</span>)
+t.forward(<span class="out">100</span>); t.right(<span class="out">90</span>)
+t.forward(<span class="out">100</span>); t.right(<span class="out">90</span>)
+t.forward(<span class="out">100</span>); t.right(<span class="out">90</span>)</pre>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <h1>画三角形</h1>
+    <p>三角形有 3 条边、3 个角</p>
+    <p>每个角转 <b>360 ÷ 3 = 120</b> 度</p>
+    <pre>t.forward(<span class="out">120</span>); t.left(<span class="out">120</span>)
+t.forward(<span class="out">120</span>); t.left(<span class="out">120</span>)
+t.forward(<span class="out">120</span>); t.left(<span class="out">120</span>)</pre>
+    <p class="subtitle">发现规律了吗？360 ÷ 边数 = 每个角转的度数</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="emoji-big">💻</div>
+    <h1>动手时间！</h1>
+    <p>打开 <b>demo.py</b>，运行：</p>
+    <pre>python demo.py</pre>
+    <p>注意看，会弹出一个小窗口，海龟在里面爬！</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="emoji-big">⭐</div>
+    <h1>今天学会了</h1>
+    <ul>
+      <li><b>import turtle</b> 请出海龟</li>
+      <li><b>forward</b> / <b>backward</b> 前进后退</li>
+      <li><b>left</b> / <b>right</b> 左转右转</li>
+      <li><b>360 ÷ 边数</b> = 转角的秘密</li>
+    </ul>
+    <p class="subtitle">挑战：画长方形、五边形、六边形！</p>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button id="prev" title="上一页">‹</button>
+  <span class="counter" id="counter">1 / 10</span>
+  <button id="next" title="下一页">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  const counter = document.getElementById('counter');
+
+  function show(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.getElementById('prev').addEventListener('click', () => show(current - 1));
+  document.getElementById('next').addEventListener('click', () => show(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+  });
+
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.target.closest('button')) return;
+    show(e.clientX > window.innerWidth / 2 ? current + 1 : current - 1);
+  });
+
+  show(0);
+</script>
+</body>
+</html>

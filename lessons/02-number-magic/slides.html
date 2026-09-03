@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 2 课 · 数字魔法师</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+    overflow: hidden;
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 4vh 8vw; text-align: center; color: #fff;
+    opacity: 0; transform: translateX(40px);
+    transition: opacity .35s ease, transform .35s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+
+  .slide h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); margin-bottom: 3vh; text-shadow: 0 3px 12px rgba(0,0,0,.25); }
+  .slide h2 { font-size: clamp(1.4rem, 3.5vw, 2.4rem); margin-bottom: 2vh; opacity: .95; }
+  .slide p, .slide li { font-size: clamp(1.1rem, 2.6vw, 1.9rem); line-height: 1.7; margin: 1vh 0; }
+  .slide ul { list-style: none; text-align: left; }
+  .slide li::before { content: "▶ "; color: #ffe082; }
+
+  .subtitle { font-size: clamp(1rem, 2.2vw, 1.5rem); opacity: .85; margin-top: 2vh; }
+
+  .badge {
+    display: inline-block; background: #ffe082; color: #7a2040;
+    font-weight: bold; padding: .4em 1em; border-radius: 2em;
+    font-size: clamp(.9rem, 2vw, 1.3rem); margin-bottom: 2vh;
+  }
+  .warn {
+    display: inline-block; background: #ff4d4d; color: #fff;
+    font-weight: bold; padding: .3em 1em; border-radius: 2em;
+    font-size: clamp(.9rem, 2vw, 1.3rem); margin-bottom: 2vh;
+  }
+
+  pre {
+    background: #2d2a3e; color: #ffe082; text-align: left;
+    padding: 2.5vh 2.5vw; border-radius: 14px;
+    font-size: clamp(1rem, 2.6vw, 1.8rem); line-height: 1.6;
+    font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3); margin: 2vh 0;
+    white-space: pre-wrap; word-break: break-all;
+  }
+  pre .cmt { color: #8be9a0; }
+  pre .out { color: #7dd3fc; }
+
+  .emoji-big { font-size: clamp(4rem, 12vw, 8rem); margin-bottom: 2vh; }
+
+  .controls {
+    position: fixed; bottom: 2vh; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 1.2vw; z-index: 10;
+  }
+  .controls button {
+    background: rgba(255,255,255,.2); border: 2px solid rgba(255,255,255,.6);
+    color: #fff; font-size: 1.4rem; width: 3rem; height: 3rem;
+    border-radius: 50%; cursor: pointer; transition: background .2s;
+  }
+  .controls button:hover { background: rgba(255,255,255,.4); }
+  .counter { color: #fff; font-size: 1.1rem; min-width: 6rem; text-align: center; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide">
+    <div class="emoji-big">🧮</div>
+    <div class="badge">Python 编程 · 第一单元</div>
+    <h1>数字魔法师</h1>
+    <p class="subtitle">今天让电脑帮我们算数，还能记住数字~</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <h1>变量：贴了标签的盒子</h1>
+    <p>变量就像一个小盒子，上面贴着名字，里面装着东西</p>
+    <pre><span class="cmt"># 把 100 放进叫 coins 的盒子</span>
+coins = <span class="out">100</span>
+
+<span class="cmt"># 把"小明"放进叫 name 的盒子</span>
+name = <span class="out">"小明"</span></pre>
+    <p>数字不用引号，文字要引号</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <h1>= 不是"等于"</h1>
+    <p>在 Python 里，<b>=</b> 的意思是"放进盒子里"</p>
+    <pre>coins = <span class="out">100</span>
+<span class="cmt"># 读作：把 100 放进 coins 盒子</span></pre>
+    <p class="subtitle">跟数学里的"等于"不一样哦！</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <h1>数字的四则运算</h1>
+    <pre>100 + 30   <span class="cmt"># 加 = 130</span>
+100 - 20   <span class="cmt"># 减 = 80</span>
+100 * 3    <span class="cmt"># 乘 = 300（用 * 不是 ×）</span>
+100 / 4    <span class="cmt"># 除 = 25.0（用 / 不是 ÷）</span></pre>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <h1>input()：让程序听你说话</h1>
+    <p><b>input()</b> 会停下来，等你打字，再把你打的字还给程序</p>
+    <pre>name = input(<span class="out">"你叫什么？"</span>)</pre>
+    <p>你打的字会被放进 name 这个盒子里</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="warn">⚠️ 重点</div>
+    <h1>input 拿到的是"文字"</h1>
+    <p>你输入的 <b>1</b> 和 <b>2</b>，程序眼里是文字 <b>"1"</b> <b>"2"</b></p>
+    <pre>text_a = input(<span class="out">"输入第一个数："</span>)  <span class="cmt"># 你输入 1</span>
+text_b = input(<span class="out">"输入第二个数："</span>)  <span class="cmt"># 你输入 2</span>
+
+print(text_a + text_b)   <span class="cmt"># 结果不是 3，而是 "12"！</span></pre>
+    <p>因为文字相加是"拼接"，不是"计算"</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <h1>int()：把文字变成数字</h1>
+    <p>想真正算数，先用 <b>int()</b> 把文字变成数字</p>
+    <p>int 是 integer（整数）的缩写</p>
+    <pre>int(<span class="out">"100"</span>)   <span class="cmt"># 变成数字 100</span>
+
+print(int(text_a) + int(text_b))  <span class="cmt"># 1 + 2 = 3 ✓</span></pre>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <h1>完整例子：零花钱计算器</h1>
+    <pre>money = int(input(<span class="out">"零花钱有多少？"</span>))
+cost  = int(input(<span class="out">"想买的东西多少钱？"</span>))
+left  = money - cost
+
+print(<span class="out">"买完后你还剩"</span>, left, <span class="out">"元"</span>)</pre>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="emoji-big">💻</div>
+    <h1>动手时间！</h1>
+    <p>打开 <b>demo.py</b>，运行：</p>
+    <pre>python demo.py</pre>
+    <p>试试输入不同的数字，看结果怎么变</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="emoji-big">⭐</div>
+    <h1>今天学会了</h1>
+    <ul>
+      <li><b>变量</b>：贴了标签的盒子，用 <b>=</b> 装东西</li>
+      <li><b>四则运算</b>：+ - * /</li>
+      <li><b>input()</b>：让程序听你说话</li>
+      <li><b>int()</b>：把文字变成数字</li>
+    </ul>
+    <p class="subtitle">挑战：做一个面积计算器！</p>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button id="prev" title="上一页">‹</button>
+  <span class="counter" id="counter">1 / 10</span>
+  <button id="next" title="下一页">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  const counter = document.getElementById('counter');
+
+  function show(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.getElementById('prev').addEventListener('click', () => show(current - 1));
+  document.getElementById('next').addEventListener('click', () => show(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+  });
+
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.target.closest('button')) return;
+    show(e.clientX > window.innerWidth / 2 ? current + 1 : current - 1);
+  });
+
+  show(0);
+</script>
+</body>
+</html>

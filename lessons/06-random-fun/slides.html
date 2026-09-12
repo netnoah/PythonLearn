@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 6 课 · 随机大冒险</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    overflow: hidden;
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 4vh 8vw; text-align: center; color: #fff;
+    opacity: 0; transform: translateX(40px);
+    transition: opacity .35s ease, transform .35s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+
+  .slide h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); margin-bottom: 3vh; text-shadow: 0 3px 12px rgba(0,0,0,.25); }
+  .slide h2 { font-size: clamp(1.4rem, 3.5vw, 2.4rem); margin-bottom: 2vh; opacity: .95; }
+  .slide p, .slide li { font-size: clamp(1.1rem, 2.6vw, 1.9rem); line-height: 1.7; margin: 1vh 0; }
+  .slide ul { list-style: none; text-align: left; }
+  .slide li::before { content: "▶ "; color: #ffd166; }
+
+  .subtitle { font-size: clamp(1rem, 2.2vw, 1.5rem); opacity: .9; margin-top: 2vh; }
+
+  .badge {
+    display: inline-block; background: #ffd166; color: #0b1f45;
+    font-weight: bold; padding: .4em 1em; border-radius: 2em;
+    font-size: clamp(.9rem, 2vw, 1.3rem); margin-bottom: 2vh;
+  }
+
+  pre {
+    background: #0d1b3a; color: #ffd166; text-align: left;
+    padding: 2.5vh 2.5vw; border-radius: 14px;
+    font-size: clamp(1rem, 2.6vw, 1.8rem); line-height: 1.6;
+    font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3); margin: 2vh 0;
+    white-space: pre-wrap; word-break: break-all;
+  }
+  pre .cmt { color: #8be9a0; }
+  pre .out { color: #7dd3fc; }
+
+  .emoji-big { font-size: clamp(4rem, 12vw, 8rem); margin-bottom: 2vh; }
+
+  .controls {
+    position: fixed; bottom: 2vh; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 1.2vw; z-index: 10;
+  }
+  .controls button {
+    background: rgba(255,255,255,.2); border: 2px solid rgba(255,255,255,.6);
+    color: #fff; font-size: 1.4rem; width: 3rem; height: 3rem;
+    border-radius: 50%; cursor: pointer; transition: background .2s;
+  }
+  .controls button:hover { background: rgba(255,255,255,.4); }
+  .counter { color: #fff; font-size: 1.1rem; min-width: 6rem; text-align: center; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide">
+    <div class="emoji-big">🎲</div>
+    <div class="badge">Python 编程 · 第二单元</div>
+    <h1>随机大冒险</h1>
+    <p class="subtitle">用 random 让程序"随机"，画一片每次都不一样的璀璨星空！</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <h1>什么是随机？</h1>
+    <ul>
+      <li>随机 = 每次都不一样，你猜不到结果</li>
+      <li>像掷骰子 🎲、抽卡、抽奖</li>
+      <li>游戏里的掉落、暴击，背后都是"随机"</li>
+    </ul>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <h1>把随机工具箱拿来</h1>
+    <pre><span class="cmt"># 就像第 3 课请出海龟</span>
+import random</pre>
+    <p>拿来了就能用随机，不用另外安装</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <h1>掷骰子：randint</h1>
+    <pre>random.randint(<span class="out">1</span>, <span class="out">6</span>)
+<span class="cmt"># 在 1~6 之间随机挑一个整数</span></pre>
+    <p>用循环掷 3 次：</p>
+    <pre>for i in range(<span class="out">3</span>):
+    print(random.randint(<span class="out">1</span>, <span class="out">6</span>))</pre>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <h1>随机挑一个：choice</h1>
+    <pre>colors = [<span class="out">"red"</span>, <span class="out">"yellow"</span>, <span class="out">"blue"</span>]
+
+random.choice(colors)
+<span class="cmt"># 从列表里随机挑一个</span></pre>
+    <p>星空里"随机颜色"就靠它</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <h1>小工具：t.dot 画圆点</h1>
+    <pre>t.dot(<span class="out">6</span>, <span class="out">"gold"</span>)
+<span class="cmt"># 画一个直径 6 的金色实心圆点</span></pre>
+    <p>用它画星星，比填充还简单</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <h1>星空 = 循环 + 随机</h1>
+    <pre>for i in range(<span class="out">60</span>):
+    x = random.randint(<span class="out">-380</span>, <span class="out">380</span>)
+    y = random.randint(<span class="out">-280</span>, <span class="out">280</span>)
+    size = random.randint(<span class="out">2</span>, <span class="out">9</span>)
+    t.penup()
+    t.goto(x, y)
+    t.dot(size, random.choice(star_colors))</pre>
+    <p>位置、大小、颜色全都随机！</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="emoji-big">🌌</div>
+    <h1>每次都不一样！</h1>
+    <p>连续运行 3 次，星空每次都不同</p>
+    <p class="subtitle">这就是随机的魔法</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="emoji-big">💻</div>
+    <h1>动手时间！</h1>
+    <p>打开 <b>demo.py</b>，运行：</p>
+    <pre>python demo.py</pre>
+    <p>改改看：星星数量、大小、颜色</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="emoji-big">⭐</div>
+    <h1>今天学会了</h1>
+    <ul>
+      <li><b>import random</b> 随机工具箱</li>
+      <li><b>randint(a, b)</b> 随机整数</li>
+      <li><b>choice(列表)</b> 随机挑一个</li>
+      <li><b>t.dot</b> 画实心圆点</li>
+      <li>循环 + 随机 = 星空</li>
+    </ul>
+    <p class="subtitle">挑战：加一个月亮！下一课：图案生成器 🎯</p>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button id="prev" title="上一页">‹</button>
+  <span class="counter" id="counter">1 / 10</span>
+  <button id="next" title="下一页">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  const counter = document.getElementById('counter');
+
+  function show(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.getElementById('prev').addEventListener('click', () => show(current - 1));
+  document.getElementById('next').addEventListener('click', () => show(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+  });
+
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.target.closest('button')) return;
+    show(e.clientX > window.innerWidth / 2 ? current + 1 : current - 1);
+  });
+
+  show(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 4 课 · 给世界涂上颜色</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #0575e6 0%, #00c9ff 100%);
+    overflow: hidden;
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 4vh 8vw; text-align: center; color: #fff;
+    opacity: 0; transform: translateX(40px);
+    transition: opacity .35s ease, transform .35s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+
+  .slide h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); margin-bottom: 3vh; text-shadow: 0 3px 12px rgba(0,0,0,.25); }
+  .slide h2 { font-size: clamp(1.4rem, 3.5vw, 2.4rem); margin-bottom: 2vh; opacity: .95; }
+  .slide p, .slide li { font-size: clamp(1.1rem, 2.6vw, 1.9rem); line-height: 1.7; margin: 1vh 0; }
+  .slide ul { list-style: none; text-align: left; }
+  .slide li::before { content: "▶ "; color: #ffd166; }
+
+  .subtitle { font-size: clamp(1rem, 2.2vw, 1.5rem); opacity: .9; margin-top: 2vh; }
+
+  .badge {
+    display: inline-block; background: #ffd166; color: #0a3d62;
+    font-weight: bold; padding: .4em 1em; border-radius: 2em;
+    font-size: clamp(.9rem, 2vw, 1.3rem); margin-bottom: 2vh;
+  }
+
+  .color-row { display: flex; gap: 1vw; margin: 2vh 0; flex-wrap: wrap; justify-content: center; }
+  .swatch { border-radius: 12px; padding: .6em 1em; font-weight: bold; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.4); font-size: clamp(.9rem, 2vw, 1.3rem); }
+
+  pre {
+    background: #12263a; color: #ffd166; text-align: left;
+    padding: 2.5vh 2.5vw; border-radius: 14px;
+    font-size: clamp(1rem, 2.6vw, 1.8rem); line-height: 1.6;
+    font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3); margin: 2vh 0;
+    white-space: pre-wrap; word-break: break-all;
+  }
+  pre .cmt { color: #8be9a0; }
+  pre .out { color: #7dd3fc; }
+
+  .emoji-big { font-size: clamp(4rem, 12vw, 8rem); margin-bottom: 2vh; }
+
+  .controls {
+    position: fixed; bottom: 2vh; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 1.2vw; z-index: 10;
+  }
+  .controls button {
+    background: rgba(255,255,255,.2); border: 2px solid rgba(255,255,255,.6);
+    color: #fff; font-size: 1.4rem; width: 3rem; height: 3rem;
+    border-radius: 50%; cursor: pointer; transition: background .2s;
+  }
+  .controls button:hover { background: rgba(255,255,255,.4); }
+  .counter { color: #fff; font-size: 1.1rem; min-width: 6rem; text-align: center; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide">
+    <div class="emoji-big">🎨</div>
+    <div class="badge">Python 编程 · 第二单元</div>
+    <h1>给世界涂上颜色</h1>
+    <p class="subtitle">学会换颜色、填充、抬笔落笔，画出彩虹和小房子！</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <h1>还记得小海龟吗？</h1>
+    <ul>
+      <li><b>import turtle</b> 请出海龟</li>
+      <li><b>forward</b> / <b>backward</b> 前进后退</li>
+      <li><b>left</b> / <b>right</b> 左转右转</li>
+      <li>上一课我们画的都是"黑线条"</li>
+    </ul>
+    <p class="subtitle">今天，让画变得五颜六色！</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <h1>新本领 ①：换颜色 pencolor</h1>
+    <pre>t.pencolor(<span class="out">"red"</span>)    <span class="cmt"># 把笔换成红色</span>
+t.forward(<span class="out">100</span>)      <span class="cmt"># 之后画的线都是红色</span></pre>
+    <p>常用的颜色单词：</p>
+    <div class="color-row">
+      <span class="swatch" style="background:#e63946;">red</span>
+      <span class="swatch" style="background:#f77f00;">orange</span>
+      <span class="swatch" style="background:#ffd60a; color:#333;">yellow</span>
+      <span class="swatch" style="background:#06d6a0;">green</span>
+      <span class="swatch" style="background:#1d70ff;">blue</span>
+      <span class="swatch" style="background:#7b2cbf;">purple</span>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <h1>新本领 ②：抬笔 / 落笔</h1>
+    <pre>t.penup()       <span class="cmt"># 抬笔：走路不留线</span>
+t.forward(<span class="out">150</span>)   <span class="cmt"># 悄悄挪个位置</span>
+t.pendown()     <span class="cmt"># 落笔：又能画画了</span></pre>
+    <p>就像写字：抬起来挪位置，再放下来继续写</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <h1>新本领 ③：填充颜色</h1>
+    <pre>t.fillcolor(<span class="out">"gold"</span>)   <span class="cmt"># 里面涂什么色</span>
+t.begin_fill()        <span class="cmt"># 开始装颜料</span>
+t.forward(<span class="out">120</span>)      <span class="cmt"># 画一个封闭图形……</span>
+t.left(<span class="out">120</span>)
+t.forward(<span class="out">120</span>)
+t.left(<span class="out">120</span>)
+t.forward(<span class="out">120</span>)
+t.end_fill()          <span class="cmt"># 结束：涂满啦！</span></pre>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <h1>小工具：背景 + 粗细</h1>
+    <pre>turtle.bgcolor(<span class="out">"skyblue"</span>)  <span class="cmt"># 背景颜色（天空蓝）</span>
+t.pensize(<span class="out">12</span>)              <span class="cmt"># 笔的粗细，越大越粗</span></pre>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <h1>小工具：画圆 circle</h1>
+    <pre>t.circle(<span class="out">50</span>)        <span class="cmt"># 画一个整圆</span>
+t.circle(<span class="out">80</span>, <span class="out">180</span>)   <span class="cmt"># 画半个圆（一道弧）</span></pre>
+    <p>彩虹就是靠"半圆"一层套一层画出来的！</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="emoji-big">🌈</div>
+    <h1>画彩虹</h1>
+    <p>6 个半圆套在一起：</p>
+    <p>外圈红 → 橙 → 黄 → 绿 → 蓝 → 内圈紫</p>
+    <p class="subtitle">半径一圈比一圈小，就套成了彩虹</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="emoji-big">🏠</div>
+    <h1>画小房子</h1>
+    <ul>
+      <li><b>墙壁</b> = 填充的正方形（淡黄）</li>
+      <li><b>屋顶</b> = 填充的三角形（红）</li>
+      <li><b>门</b> = 填充的小长方形（棕）</li>
+    </ul>
+    <p class="subtitle">今天学的三个本领，全都用上啦！</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="emoji-big">💻</div>
+    <h1>动手时间！</h1>
+    <p>打开 <b>demo.py</b>，运行：</p>
+    <pre>python demo.py</pre>
+    <p>自己改改看：换屋顶颜色、把门变大、加一扇窗户！</p>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="emoji-big">⭐</div>
+    <h1>今天学会了</h1>
+    <ul>
+      <li><b>pencolor</b> 换笔的颜色</li>
+      <li><b>penup / pendown</b> 抬笔落笔</li>
+      <li><b>begin_fill / end_fill</b> 填充</li>
+      <li><b>bgcolor / pensize / circle</b> 背景、粗细、圆</li>
+    </ul>
+    <p class="subtitle">挑战：画一个红绿灯！下一课：循环的魔法 🌀</p>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button id="prev" title="上一页">‹</button>
+  <span class="counter" id="counter">1 / 11</span>
+  <button id="next" title="下一页">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  const counter = document.getElementById('counter');
+
+  function show(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.getElementById('prev').addEventListener('click', () => show(current - 1));
+  document.getElementById('next').addEventListener('click', () => show(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+  });
+
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.target.closest('button')) return;
+    show(e.clientX > window.innerWidth / 2 ? current + 1 : current - 1);
+  });
+
+  show(0);
+</script>
+</body>
+</html>

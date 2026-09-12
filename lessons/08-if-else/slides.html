@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 8 课 · 如果…就…</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    overflow: hidden;
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 4vh 8vw; text-align: center; color: #fff;
+    opacity: 0; transform: translateX(40px);
+    transition: opacity .35s ease, transform .35s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+
+  .slide h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); margin-bottom: 3vh; text-shadow: 0 3px 12px rgba(0,0,0,.25); }
+  .slide h2 { font-size: clamp(1.4rem, 3.5vw, 2.4rem); margin-bottom: 2vh; opacity: .95; }
+  .slide p, .slide li { font-size: clamp(1.1rem, 2.6vw, 1.9rem); line-height: 1.7; margin: 1vh 0; }
+  .slide ul { list-style: none; text-align: left; }
+  .slide li::before { content: "▶ "; color: #ffd166; }
+
+  .subtitle { font-size: clamp(1rem, 2.2vw, 1.5rem); opacity: .9; margin-top: 2vh; }
+
+  .badge {
+    display: inline-block; background: #ffd166; color: #0a2026;
+    font-weight: bold; padding: .4em 1em; border-radius: 2em;
+    font-size: clamp(.9rem, 2vw, 1.3rem); margin-bottom: 2vh;
+  }
+
+  pre {
+    background: #0a1a1f; color: #ffd166; text-align: left;
+    padding: 2.5vh 2.5vw; border-radius: 14px;
+    font-size: clamp(1rem, 2.6vw, 1.8rem); line-height: 1.6;
+    font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3); margin: 2vh 0;
+    white-space: pre-wrap; word-break: break-all;
+  }
+  pre .cmt { color: #8be9a0; }
+  pre .out { color: #7dd3fc; }
+  pre .err { color: #ff9e9e; }
+
+  .emoji-big { font-size: clamp(4rem, 12vw, 8rem); margin-bottom: 2vh; }
+
+  .controls {
+    position: fixed; bottom: 2vh; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 1.2vw; z-index: 10;
+  }
+  .controls button {
+    background: rgba(255,255,255,.2); border: 2px solid rgba(255,255,255,.6);
+    color: #fff; font-size: 1.4rem; width: 3rem; height: 3rem;
+    border-radius: 50%; cursor: pointer; transition: background .2s;
+  }
+  .controls button:hover { background: rgba(255,255,255,.4); }
+  .counter { color: #fff; font-size: 1.1rem; min-width: 6rem; text-align: center; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide">
+    <div class="emoji-big">🧠</div>
+    <div class="badge">Python 编程 · 第三单元</div>
+    <h1>如果…就…</h1>
+    <p class="subtitle">学 if / else，让程序第一次"会思考"，做出猜数字小游戏！</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <h1>程序会思考了</h1>
+    <ul>
+      <li>以前：程序只会照着做</li>
+      <li>现在：程序能<b>看情况</b>做不同的事</li>
+      <li>比如：猜对了说"对"，猜错了说"错"</li>
+    </ul>
+    <p class="subtitle">这就是 if / else</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <h1>比较运算符</h1>
+    <pre><span class="out">==</span>  等于      <span class="out">!=</span>  不等于
+<span class="out">&gt;</span>   大于      <span class="out">&lt;</span>   小于
+<span class="out">&gt;=</span>  大于等于  <span class="out">&lt;=</span>  小于等于</pre>
+    <p>比较的结果是 <b>True</b> 或 <b>False</b></p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <h1>True 和 False</h1>
+    <pre>print(<span class="out">5</span> &gt; <span class="out">3</span>)   <span class="cmt"># 5 比 3 大，对 → True</span>
+print(<span class="out">5</span> == <span class="out">3</span>)  <span class="cmt"># 5 等于 3？错 → False</span></pre>
+    <p>True = 对，False = 错，像开关的开/关</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <h1>if / else 语法</h1>
+    <pre><span class="out">if</span> 条件:
+    <span class="cmt"># 条件对，做这里</span>
+<span class="out">else</span>:
+    <span class="cmt"># 否则做这里</span></pre>
+    <p>冒号 <b>:</b> 和<b>缩进</b>是关键（和第 5 课循环一样）</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <h1>== 和 = 别搞混！</h1>
+    <pre><span class="out">=</span>   赋值：把东西装进去
+x = <span class="out">5</span>
+
+<span class="out">==</span>  比较：是不是相等
+x == <span class="out">5</span></pre>
+    <p style="color:#ff9e9e;">判断时写错成 = ，程序就会"傻掉"</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <h1>猜数字小游戏</h1>
+    <pre>secret = random.randint(<span class="out">1</span>, <span class="out">10</span>)
+guess = int(input(<span class="out">"猜 1~10："</span>))
+
+<span class="out">if</span> guess == secret:
+    print(<span class="out">"猜对啦！🎉"</span>)
+<span class="out">else</span>:
+    print(<span class="out">"猜错了……"</span>)</pre>
+    <p>random + input + if/else 三个老朋友</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="emoji-big">💻</div>
+    <h1>动手时间！</h1>
+    <p>运行：</p>
+    <pre>python demo.py</pre>
+    <p>改改看：范围改成 1~100、玩"猜硬币"</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="emoji-big">⭐</div>
+    <h1>今天学会了</h1>
+    <ul>
+      <li><b>if / else</b> 判断</li>
+      <li><b>比较运算符</b> == != &gt; &lt; &gt;= &lt;=</li>
+      <li><b>True / False</b> 对和错</li>
+      <li><b>==</b> 比较 vs <b>=</b> 赋值</li>
+    </ul>
+    <p class="subtitle">挑战：奇偶数判断器！下一课：更多选择 elif</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="emoji-big">✌️</div>
+    <h1>下一课：更多选择 elif</h1>
+    <p>猜数字时告诉你"猜大了 / 猜小了"</p>
+    <p class="subtitle">还能和电脑玩石头剪刀布！</p>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button id="prev" title="上一页">‹</button>
+  <span class="counter" id="counter">1 / 10</span>
+  <button id="next" title="下一页">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  const counter = document.getElementById('counter');
+
+  function show(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.getElementById('prev').addEventListener('click', () => show(current - 1));
+  document.getElementById('next').addEventListener('click', () => show(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+  });
+
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.target.closest('button')) return;
+    show(e.clientX > window.innerWidth / 2 ? current + 1 : current - 1);
+  });
+
+  show(0);
+</script>
+</body>
+</html>

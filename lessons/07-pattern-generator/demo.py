@@ -31,7 +31,7 @@ print("图案生成器启动！")
 # 关键：times（画几个）决定角度 360 ÷ times
 colors = ["red", "orange", "yellow", "green", "cyan", "blue", "purple"]
 
-times = 36            # ← 改成 12、18、24、72……花纹完全不一样
+times = 100            # ← 改成 12、18、24、72……花纹完全不一样
 angle = 360 / times   # 每次转的角度，正好转满一圈
 
 for i in range(times):
@@ -43,12 +43,15 @@ print("曼陀罗画好了！擦掉，画雪花")
 
 t.clear()             # 擦掉（背景还在）
 
-# ---------- 图案 2：雪花 ----------
-# 一条"臂"：主干 + 两个小分叉；重复 6 次（360 ÷ 6 = 60 度）
+# # ---------- 图案 2：雪花 ----------
+# # 一条"臂"：主干 + 两个小分叉；重复 6 次（360 ÷ 6 = 60 度）
 t.pencolor("white")
 t.pensize(3)
+times = 1000             # 每条臂转的角度
+angle = 360 / times   # 每条臂转的角度
 
-for i in range(6):
+
+for i in range(times):
     t.forward(80)          # 主干（从中心往外）
     t.left(30)             # 左分叉
     t.forward(30)
@@ -58,9 +61,10 @@ for i in range(6):
     t.backward(30)
     t.left(30)             # 回到主干方向
     t.backward(80)         # 回到中心
-    t.right(60)            # 转 60 度，画下一条臂
+    t.right(angle)            # 转 60 度，画下一条臂
 
-print("雪花也画好了！")
+
+# print("雪花也画好了！")
 
 # 画完了！让窗口不关闭
 turtle.done()

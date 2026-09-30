@@ -38,6 +38,7 @@ print("掷 3 次骰子（1~6）：")
 for i in range(3):
     print(random.randint(1, 6))
 
+random.seed(0)
 # ---------- 2. 随机抽颜色：random.choice ----------
 colors = ["red", "orange", "yellow", "green", "blue", "purple"]
 print("随机抽 3 个颜色：")

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 9 课 · 更多选择</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #0b3d2e 0%, #1b6b4a 50%, #2f9e6e 100%);
+    overflow: hidden;
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 4vh 8vw; text-align: center; color: #fff;
+    opacity: 0; transform: translateX(40px);
+    transition: opacity .35s ease, transform .35s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+
+  .slide h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); margin-bottom: 3vh; text-shadow: 0 3px 12px rgba(0,0,0,.25); }
+  .slide h2 { font-size: clamp(1.4rem, 3.5vw, 2.4rem); margin-bottom: 2vh; opacity: .95; }
+  .slide p, .slide li { font-size: clamp(1.1rem, 2.6vw, 1.9rem); line-height: 1.7; margin: 1vh 0; }
+  .slide ul { list-style: none; text-align: left; }
+  .slide li::before { content: "▶ "; color: #ffd166; }
+
+  .subtitle { font-size: clamp(1rem, 2.2vw, 1.5rem); opacity: .9; margin-top: 2vh; }
+
+  .badge {
+    display: inline-block; background: #ffd166; color: #0a2e1f;
+    font-weight: bold; padding: .4em 1em; border-radius: 2em;
+    font-size: clamp(.9rem, 2vw, 1.3rem); margin-bottom: 2vh;
+  }
+
+  pre {
+    background: #0a1f16; color: #ffd166; text-align: left;
+    padding: 2.5vh 2.5vw; border-radius: 14px;
+    font-size: clamp(1rem, 2.6vw, 1.8rem); line-height: 1.6;
+    font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3); margin: 2vh 0;
+    white-space: pre-wrap; word-break: break-all;
+  }
+  pre .cmt { color: #8be9a0; }
+  pre .out { color: #7dd3fc; }
+  pre .err { color: #ff9e9e; }
+
+  .emoji-big { font-size: clamp(4rem, 12vw, 8rem); margin-bottom: 2vh; }
+
+  .controls {
+    position: fixed; bottom: 2vh; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 1.2vw; z-index: 10;
+  }
+  .controls button {
+    background: rgba(255,255,255,.2); border: 2px solid rgba(255,255,255,.6);
+    color: #fff; font-size: 1.4rem; width: 3rem; height: 3rem;
+    border-radius: 50%; cursor: pointer; transition: background .2s;
+  }
+  .controls button:hover { background: rgba(255,255,255,.4); }
+  .counter { color: #fff; font-size: 1.1rem; min-width: 6rem; text-align: center; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide">
+    <div class="emoji-big">✊ ✋ ✌️</div>
+    <div class="badge">Python 编程 · 第三单元</div>
+    <h1>更多选择</h1>
+    <p class="subtitle">学 elif 多分支，和电脑玩石头剪刀布！</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <h1>复习：if / else</h1>
+    <ul>
+      <li>if / else 只能<b>二选一</b></li>
+      <li>可生活里经常要<b>三选一、四选一</b></li>
+      <li>比如：优秀 / 及格 / 加油</li>
+    </ul>
+    <p class="subtitle">怎么办？请出 elif！</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <h1>elif = 再不然如果</h1>
+    <pre><span class="out">if</span> 条件1:
+    <span class="cmt"># 条件1 对，做这里</span>
+<span class="out">elif</span> 条件2:
+    <span class="cmt"># 否则如果条件2 对，做这里</span>
+<span class="out">else</span>:
+    <span class="cmt"># 都不对，做这里</span></pre>
+    <p>elif 能加<b>好多好多个</b>分支</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <h1>给分数评级</h1>
+    <pre>score = int(input(<span class="out">"分数："</span>))
+
+<span class="out">if</span> score &gt;= <span class="out">90</span>:
+    print(<span class="out">"优秀！⭐⭐⭐"</span>)
+<span class="out">elif</span> score &gt;= <span class="out">60</span>:
+    print(<span class="out">"及格 ⭐"</span>)
+<span class="out">else</span>:
+    print(<span class="out">"还要加油 💪"</span>)</pre>
+    <p>95 分走第 1 条，70 分走第 2 条，50 分走最后</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <h1>从上往下，一个个试</h1>
+    <ul>
+      <li>程序从<b>上往下</b>依次检查条件</li>
+      <li>第一个<b>对</b>的分支执行完，就<b>停</b></li>
+      <li>所以条件要从<b>严格</b>排到<b>宽松</b></li>
+    </ul>
+    <pre><span class="out">if</span> score &gt;= <span class="out">90</span>:   <span class="cmt"># 先看最高分</span>
+<span class="out">elif</span> score &gt;= <span class="out">60</span>: <span class="cmt"># 再看及格</span>
+<span class="out">else</span>:             <span class="cmt"># 最后剩下</span></pre>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <h1>石头剪刀布</h1>
+    <ul>
+      <li>石头 ✊ 砸 剪刀 ✌️</li>
+      <li>剪刀 ✌️ 剪 布 ✋</li>
+      <li>布 ✋ 包 石头 ✊</li>
+    </ul>
+    <p class="subtitle">转着圈克制，没有绝对老大</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <h1>和电脑猜拳</h1>
+    <pre>computer = random.randint(<span class="out">1</span>, <span class="out">3</span>)  <span class="cmt"># 电脑出</span>
+player = int(input(<span class="out">"1石头 2剪刀 3布："</span>))
+
+<span class="out">if</span> player == computer:
+    print(<span class="out">"平局！"</span>)
+<span class="out">elif</span> player == <span class="out">1</span> <span class="out">and</span> computer == <span class="out">2</span>:
+    print(<span class="out">"石头砸剪刀，你赢啦！🎉"</span>)
+<span class="cmt"># ……剪刀剪布、布包石头，共 3 个你赢</span></pre>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <h1>and = 而且</h1>
+    <pre>player == <span class="out">1</span> <span class="out">and</span> computer == <span class="out">2</span>
+<span class="cmt"># 你出石头，而且电脑出剪刀</span></pre>
+    <p>两个条件<b>都</b>满足，结果才是 True</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="emoji-big">💻</div>
+    <h1>动手时间！</h1>
+    <p>运行：</p>
+    <pre>python demo.py</pre>
+    <p>和电脑大战三百回合！</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="emoji-big">⭐</div>
+    <h1>今天学会了</h1>
+    <ul>
+      <li><b>elif</b> 多分支（三选一、四选一）</li>
+      <li>条件<b>从上往下</b>一个个试</li>
+      <li><b>and</b>（而且）两个条件都要满足</li>
+      <li>做出<b>石头剪刀布</b>小游戏</li>
+    </ul>
+    <p class="subtitle">挑战：天气穿衣助手！下一课：谜题闯关 🎯</p>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button id="prev" title="上一页">‹</button>
+  <span class="counter" id="counter">1 / 10</span>
+  <button id="next" title="下一页">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  const counter = document.getElementById('counter');
+
+  function show(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.getElementById('prev').addEventListener('click', () => show(current - 1));
+  document.getElementById('next').addEventListener('click', () => show(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+  });
+
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.target.closest('button')) return;
+    show(e.clientX > window.innerWidth / 2 ? current + 1 : current - 1);
+  });
+
+  show(0);
+</script>
+</body>
+</html>

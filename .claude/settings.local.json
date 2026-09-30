@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m py_compile demo.py challenge.py)",
+      "Bash(printf '75\\\\n1\\\\n')",
+      "Bash(python demo.py)",
+      "Bash(python -c \":*)",
+      "Bash(printf '8\\\\n水\\\\n20\\\\n双\\\\n')",
+      "Bash(printf '5\\\\n5\\\\n5\\\\n')",
+      "Bash(python challenge.py)",
+      "Bash(printf '101\\\\n101\\\\n101\\\\n101\\\\n101\\\\n101\\\\n101\\\\n101\\\\n101\\\\n101\\\\n')"
+    ]
+  }
+}

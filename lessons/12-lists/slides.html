@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第 12 课 · 藏宝箱</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+    overflow: hidden;
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 4vh 8vw; text-align: center; color: #fff;
+    opacity: 0; transform: translateX(40px);
+    transition: opacity .35s ease, transform .35s ease;
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+
+  .slide h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); margin-bottom: 3vh; text-shadow: 0 3px 12px rgba(0,0,0,.25); }
+  .slide h2 { font-size: clamp(1.4rem, 3.5vw, 2.4rem); margin-bottom: 2vh; opacity: .95; }
+  .slide p, .slide li { font-size: clamp(1.1rem, 2.6vw, 1.9rem); line-height: 1.7; margin: 1vh 0; }
+  .slide ul { list-style: none; text-align: left; }
+  .slide li::before { content: "▶ "; color: #ffd166; }
+
+  .subtitle { font-size: clamp(1rem, 2.2vw, 1.5rem); opacity: .9; margin-top: 2vh; }
+
+  .badge {
+    display: inline-block; background: #ffd166; color: #0a1f1a;
+    font-weight: bold; padding: .4em 1em; border-radius: 2em;
+    font-size: clamp(.9rem, 2vw, 1.3rem); margin-bottom: 2vh;
+  }
+
+  pre {
+    background: #0a1f16; color: #ffd166; text-align: left;
+    padding: 2.5vh 2.5vw; border-radius: 14px;
+    font-size: clamp(1rem, 2.6vw, 1.8rem); line-height: 1.6;
+    font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3); margin: 2vh 0;
+    white-space: pre-wrap; word-break: break-all;
+  }
+  pre .cmt { color: #8be9a0; }
+  pre .out { color: #7dd3fc; }
+  pre .err { color: #ff9e9e; }
+
+  .emoji-big { font-size: clamp(4rem, 12vw, 8rem); margin-bottom: 2vh; }
+
+  .controls {
+    position: fixed; bottom: 2vh; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 1.2vw; z-index: 10;
+  }
+  .controls button {
+    background: rgba(255,255,255,.2); border: 2px solid rgba(255,255,255,.6);
+    color: #fff; font-size: 1.4rem; width: 3rem; height: 3rem;
+    border-radius: 50%; cursor: pointer; transition: background .2s;
+  }
+  .controls button:hover { background: rgba(255,255,255,.4); }
+  .counter { color: #fff; font-size: 1.1rem; min-width: 6rem; text-align: center; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide">
+    <div class="emoji-big">🎒</div>
+    <div class="badge">Python 编程 · 第四单元</div>
+    <h1>藏宝箱</h1>
+    <p class="subtitle">学 list 列表，把很多东西装进一个箱子！</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <h1>藏宝箱 list</h1>
+    <pre>backpack = [<span class="out">"剑"</span>, <span class="out">"盾牌"</span>, <span class="out">"药水"</span>, <span class="out">"金币"</span>]</pre>
+    <p>一个箱子，装很多东西，按顺序排好</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <h1>创建列表</h1>
+    <pre>列表名 = [东西1, 东西2, 东西3]</pre>
+    <p>用方括号 <b>[ ]</b>，中间用逗号隔开</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <h1>编号从 0 开始！</h1>
+    <pre>backpack[<span class="out">0</span>]  →  剑     <span class="cmt"># 第 1 个</span>
+backpack[<span class="out">1</span>]  →  盾牌   <span class="cmt"># 第 2 个</span>
+backpack[<span class="out">2</span>]  →  药水   <span class="cmt"># 第 3 个</span></pre>
+    <p style="color:#ff9e9e;">第 1 个是 [0]，不是 [1]！最容易错的地方</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <h1>数一数：len()</h1>
+    <pre>print(len(backpack))   <span class="cmt"># 4</span></pre>
+    <p>len = length（长度），数有几样</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <h1>装新东西：append()</h1>
+    <pre>backpack.append(<span class="out">"弓箭"</span>)</pre>
+    <p>把"弓箭"塞进箱子最后面</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <h1>按编号换掉</h1>
+    <pre>backpack[<span class="out">0</span>] = <span class="out">"火焰剑"</span></pre>
+    <p>把编号 0 的东西换成新的</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <h1>小彩蛋：-1</h1>
+    <pre>backpack[<span class="out">-1</span>]   <span class="cmt"># 最后一个</span></pre>
+    <p>倒着数：-1 最后，-2 倒数第二……</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="emoji-big">💻</div>
+    <h1>动手时间！</h1>
+    <p>运行：</p>
+    <pre>python demo.py</pre>
+    <p>整理你的游戏背包吧！</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="emoji-big">⭐</div>
+    <h1>今天学会了</h1>
+    <ul>
+      <li><b>list</b> 一个箱子装很多东西</li>
+      <li>编号从 <b>0</b> 开始：<b>[0]</b> 是第 1 个</li>
+      <li><b>len()</b> 数数量、<b>append()</b> 加东西</li>
+    </ul>
+    <p class="subtitle">挑战：购物清单！下一课：翻遍藏宝箱</p>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button id="prev" title="上一页">‹</button>
+  <span class="counter" id="counter">1 / 10</span>
+  <button id="next" title="下一页">›</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+  const counter = document.getElementById('counter');
+
+  function show(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.getElementById('prev').addEventListener('click', () => show(current - 1));
+  document.getElementById('next').addEventListener('click', () => show(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+  });
+
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.target.closest('button')) return;
+    show(e.clientX > window.innerWidth / 2 ? current + 1 : current - 1);
+  });
+
+  show(0);
+</script>
+</body>
+</html>

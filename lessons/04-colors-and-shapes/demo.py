@@ -21,6 +21,7 @@ import turtle
 turtle.setup(800, 600)   # 把画画窗口调大一点（宽 800、高 600）
 
 t = turtle.Turtle()
+s = turtle.Turtle()
 t.speed(6)
 
 # 先把"背景"刷成天空蓝
